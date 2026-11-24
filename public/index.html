@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Classic Web Vulns Studio</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div>
+    <h1>Classic Web Vulns Studio</h1>
+    <p class="sub">Four deliberately vulnerable mock-shop features · progress tracking · attack journal · portfolio</p>
+  </div>
+  <div class="top-actions">
+    <button id="exportBtn" type="button">Export report</button>
+    <span id="saveState" class="save-state" aria-live="polite"></span>
+  </div>
+</header>
+
+<div class="banner" role="note">Authorized practice only — fictional shop, fictional data. Never use these techniques against real systems or any system without explicit written authorization.</div>
+
+<nav class="tabs" role="tablist" aria-label="Sections">
+  <button id="tab-modules" role="tab" aria-selected="true" type="button">Modules</button>
+  <button id="tab-journal" role="tab" aria-selected="false" type="button">Attack Journal <span id="journalCount" class="count"></span></button>
+  <button id="tab-portfolio" role="tab" aria-selected="false" type="button">Portfolio <span id="writeupCount" class="count"></span></button>
+</nav>
+
+<main>
+  <!-- Modules -->
+  <section id="panel-modules" role="tabpanel" aria-labelledby="tab-modules">
+    <div class="layout">
+      <aside class="scenario-list" id="moduleList" aria-label="Modules"></aside>
+      <div class="scenario-detail" id="moduleDetail">
+        <p class="empty-note">Select a module to begin.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Journal -->
+  <section id="panel-journal" role="tabpanel" aria-labelledby="tab-journal" hidden>
+    <h2>Attack Journal</h2>
+    <p class="hint-text">Log the requests you tried, classified by vulnerability class, technique, and the result you observed.</p>
+    <form id="journalForm" class="card">
+      <div class="field"><label for="jPrompt">Request / payload description *</label><textarea id="jPrompt" rows="2" maxlength="2000" required placeholder="What you sent, described in your own words"></textarea></div>
+      <div class="field-row">
+        <div class="field"><label for="jIntent">Intent *</label><input id="jIntent" maxlength="60" required placeholder="e.g. Dump the users table"></div>
+        <div class="field"><label for="jTechnique">Technique *</label><input id="jTechnique" maxlength="60" required placeholder="e.g. UNION-based injection"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label for="jEvasion">Evasion</label><input id="jEvasion" maxlength="60" placeholder="None"></div>
+        <div class="field"><label for="jChannel">Input channel</label><input id="jChannel" maxlength="60" placeholder="Web request"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label for="jModule">Module</label><select id="jModule"><option value="">— none —</option></select></div>
+        <div class="field"><label for="jResult">Result</label>
+          <select id="jResult">
+            <option value="untested">untested</option>
+            <option value="worked">worked</option>
+            <option value="blocked">blocked</option>
+            <option value="partial">partial</option>
+          </select>
+        </div>
+      </div>
+      <div class="field"><label for="jNotes">Notes</label><textarea id="jNotes" rows="2" maxlength="2000" placeholder="What happened, and what it tells you"></textarea></div>
+      <button type="submit">Add journal entry</button>
+      <p class="form-error" id="journalError" role="alert" hidden></p>
+    </form>
+    <div id="journalList" class="entries"></div>
+  </section>
+
+  <!-- Portfolio -->
+  <section id="panel-portfolio" role="tabpanel" aria-labelledby="tab-portfolio" hidden>
+    <h2>Portfolio</h2>
+    <p class="hint-text">Writeups are your training record. Generate one from a solved module, or write one by hand.</p>
+    <form id="writeupForm" class="card">
+      <div class="field"><label for="wTitle">Title *</label><input id="wTitle" maxlength="200" required placeholder="Writeup title"></div>
+      <div class="field"><label for="wOwasp">Classification</label><input id="wOwasp" maxlength="120" placeholder="e.g. A03:2021 Injection"></div>
+      <div class="field"><label for="wBody">Body</label><textarea id="wBody" rows="6" placeholder="Attack path, root cause, fix…"></textarea></div>
+      <button type="submit">Create writeup</button>
+      <p class="form-error" id="writeupError" role="alert" hidden></p>
+    </form>
+    <div id="writeupList" class="entries"></div>
+  </section>
+</main>
+
+<footer class="footbar">
+  <p class="small">Classic Web Vulns Studio — authorized practice only, fictional data. &copy; 2026 Paris Pehlivanovic. All rights reserved.</p>
+</footer>
+
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+<script src="/app.js"></script>
+</body>
+</html>
